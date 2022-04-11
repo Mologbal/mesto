@@ -1,0 +1,26 @@
+.elements {
+    display: flex;
+    flex-wrap: wrap;
+    width: 68.75%;
+    min-height: 744px;
+    margin: auto;
+    margin-top: 51px;
+    color: black;
+    row-gap: 17px;
+    column-gap: 17px;
+}
+
+@media screen and (max-width: 1279px) {
+    .elements {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 845px) {
+    .elements {
+        width: 282px;
+        margin-top: 36px;
+        row-gap: 21px;
+    }
+}

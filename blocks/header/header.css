@@ -1,0 +1,15 @@
+.header {
+    width: 68.75%;
+    height: 74px;
+    margin: auto;
+    margin-top: 45px;
+    border-bottom: solid 1px rgb(33%, 33%, 33%, .7);
+}
+
+@media screen and (max-width: 845px) {
+    .header {
+        width: 100%;
+        height: 56px;
+        margin-top: 28px;
+    }
+}
