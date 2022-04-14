@@ -2,9 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     width: 68.75%;
-    min-height: 744px;
     margin: auto;
-    margin-top: 51px;
+    margin-top: 47.25px;
     color: black;
     row-gap: 17px;
     column-gap: 17px;
@@ -21,6 +20,6 @@
     .elements {
         width: 282px;
         margin-top: 36px;
-        row-gap: 21px;
+        row-gap: 23px;
     }
 }

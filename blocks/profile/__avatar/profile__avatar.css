@@ -1,8 +1,10 @@
 .profile__avatar {
-    border-radius: 100px;
+    border-radius: 50%;
     width: 120px;
     height: 120px;
     margin-right: 30px;
+    /* Ниже попытка решить проблему "нестандартной картинки, верна ли она? */
+    object-fit: cover;
 }
 
 

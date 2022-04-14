@@ -21,11 +21,10 @@
 @import url(../blocks/footer/__title/footer__title.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
-@import url(../blocks/popup/__placeholder-name/popup__placeholder-name.css);
-@import url(../blocks/popup/__placeholder-passion/popup__placeholder-passion.css);
 @import url(../blocks/popup/__placeholder/popup__placeholder.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__title/popup__title.css);
-@import url(../blocks/popup/__window/popup.window.css);
-@import url(../blocks/popup/__enable/popup.__enable.css);
+@import url(../blocks/popup/__window/popup__window.css);
+@import url(../blocks/popup/_enable/popup_enable.css);
 @import url(../blocks/profile/__name-space/profile__name-space.css);
+@import url(../blocks/popup/__placeholder-input/popup__placeholder-input.css);

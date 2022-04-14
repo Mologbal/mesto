@@ -1,6 +1,5 @@
 .popup__window {
     width: 430px;
-    height: 330px;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -10,7 +9,6 @@
 @media screen and (max-width: 845px) {
     .popup__window {
         width: 282px;
-        height: 322px;
-        margin: auto;
+        margin: 0;
     }
 }

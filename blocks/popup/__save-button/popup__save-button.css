@@ -11,13 +11,15 @@
     border: none;
     cursor: pointer;
     padding: 0;
-    margin-top: 13px;
+    margin-top: 40px;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 37px;
 }
 
 .popup__save-button:hover {
     opacity: .8;
+    transition: all 1s ease 0s;
 }
 
 @media screen and (max-width: 845px) {

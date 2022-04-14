@@ -13,6 +13,6 @@
     .profile {
         width: 88.13%;
         flex-direction: column;
-        justify-content: space-between;
+        margin-top: 28px;
     }
 }

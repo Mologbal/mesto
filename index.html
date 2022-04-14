@@ -11,68 +11,68 @@
 
 <body class="page">
     <header class="header">
-        <img class="header__logo" src="./images/Mesto_logo.png" alt="Место логотип">
+        <img class="header__logo" src="./images/headerLogo.svg" alt="Место логотип">
     </header>
+    <main class="main">
 
-    <section class="profile">
-        <div class="profile__box">
-            <img class="profile__avatar" src="./images/Avathar.png" alt="аватарка">
-            <div class="profile__info">
-                <div class="profile__name-space">
-                    <h1 class="profile__info-name">Жак-Ив Кусто
-                    </h1>
-                    <button class="profile__edit-button" type="button"></button>
+        <section class="profile">
+            <div class="profile__box">
+                <img class="profile__avatar" src="./images/ava.svg" alt="аватарка">
+                <div class="profile__info">
+                        <h1 class="profile__info-name">Жак-Ив Кусто
+                        </h1>
+                        <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
+                    <p class="profile__info-passion">Исследователь океана</p>
                 </div>
-                <p class="profile__info-passion">Исследователь океана</p>
             </div>
-        </div>
-        <button class="profile__add-button" type="button"></button>
-    </section>
+            <button class="profile__add-button" type="button" aria-label="Добавить"></button>
+        </section>
 
-    <section class="elements">
-        <div class="elements__element">
-            <img class="elements__element-image" src="./images/Karathaevsk.png" alt="Храм в Карачаевске">
-            <div class="elements__element-box">
-                <p class="elements__element-subtitle">Карачаевск</p>
-                <button class="elements__element-like" type="button"></button>
+        <section class="elements">
+            <div class="elements__element">
+                <img class="elements__element-image" src="./images/Karathaevsk.png" alt="Храм в Карачаевске">
+                <div class="elements__element-box">
+                    <h2 class="elements__element-subtitle">Карачаевск</h2>
+                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                </div>
             </div>
-        </div>
-        <div class="elements__element">
-            <img class="elements__element-image" src="./images/gora.png" alt="Закат на Эльбрусе">
-            <div class="elements__element-box">
-                <p class="elements__element-subtitle">Гора Эльбрус</p>
-                <button class="elements__element-like" type="button"></button>
+            <div class="elements__element">
+                <img class="elements__element-image" src="./images/gora.png" alt="Закат на Эльбрусе">
+                <div class="elements__element-box">
+                    <h2 class="elements__element-subtitle">Гора Эльбрус</h2>
+                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                </div>
             </div>
-        </div>
-        <div class="elements__element">
-            <img class="elements__element-image" src="./images/zakat.png" alt="Гора Домбай">
-            <div class="elements__element-box">
-                <p class="elements__element-subtitle">Домбай</p>
-                <button class="elements__element-like" type="button"></button>
+            <div class="elements__element">
+                <img class="elements__element-image" src="./images/zakat.png" alt="Гора Домбай">
+                <div class="elements__element-box">
+                    <h2 class="elements__element-subtitle">Домбай</h2>
+                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                </div>
             </div>
-        </div>
-        <div class="elements__element">
-            <img class="elements__element-image" src="./images/divnogorie.jpg" alt="Дивногорье">
-            <div class="elements__element-box">
-                <p class="elements__element-subtitle">Дивногорье</p>
-                <button class="elements__element-like" type="button"></button>
+            <div class="elements__element">
+                <img class="elements__element-image" src="./images/divnogorie.jpg" alt="Дивногорье">
+                <div class="elements__element-box">
+                    <h2 class="elements__element-subtitle">Дивногорье</h2>
+                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                </div>
             </div>
-        </div>
-        <div class="elements__element">
-            <img class="elements__element-image" src="./images/vulkanMaliiSemiachik.jpg" alt="Вулкан Семячик">
-            <div class="elements__element-box">
-                <p class="elements__element-subtitle">Вулкан Семячик</p>
-                <button class="elements__element-like" type="button"></button>
+            <div class="elements__element">
+                <img class="elements__element-image" src="./images/vulkanMaliiSemiachik.jpg" alt="Вулкан Семячик">
+                <div class="elements__element-box">
+                    <h2 class="elements__element-subtitle">Вулкан Семячик</h2>
+                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                </div>
             </div>
-        </div>
-        <div class="elements__element">
-            <img class="elements__element-image" src="./images/baikallol.jpg" alt="Озеро Байкал">
-            <div class="elements__element-box">
-                <p class="elements__element-subtitle">Озеро Байкал</p>
-                <button class="elements__element-like" type="button"></button>
+            <div class="elements__element">
+                <img class="elements__element-image" src="./images/baikallol.jpg" alt="Озеро Байкал">
+                <div class="elements__element-box">
+                    <h2 class="elements__element-subtitle">Озеро Байкал</h2>
+                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="footer">
         <p class="footer__title">© 2022 Mesto Russia</p>
@@ -80,12 +80,14 @@
 
     <div class="popup">
         <div class="popup__window">
-            <button class="popup__close-button" type="button"></button>
+            <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__placeholder">
-                <input class="popup__placeholder-name" type="text" value="Жак-Ив Кусто">
-                <input class="popup__placeholder-passion" type="text" value="Исследователь океана">
-                <button class="popup__save-button" type="submit">Сохранить</button>
+            <form class="popup__placeholder" name="popup__form">
+                <input class="popup__placeholder-input popup__placeholder-input_type_name" type="text"
+                    value="Жак-Ив Кусто">
+                <input class="popup__placeholder-input popup__placeholder-input_type_passion" type="text"
+                    value="Исследователь океана">
+                <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
             </form>
         </div>
     </div>

@@ -1,8 +1,6 @@
-.header__logo:hover {
-    opacity: .7;
+.header__logo {
+    margin-bottom: 41px;
 }
-
-
 
 @media screen and (max-width: 845px) {
     .header__logo {

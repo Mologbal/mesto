@@ -1,6 +1,5 @@
 .elements__element {
-    width: 282px;
-    height: 362px;
+    max-width: 282px;
     background-color: white;
     border-radius: 10px;
     margin: auto;
@@ -9,11 +8,5 @@
 @media screen and (max-width: 1279px) {
     .elements__element {
         margin: 0;
-    }
-}
-
-@media screen and (max-width: 845px) {
-    .elements__element {
-        height: 361px;
     }
 }
