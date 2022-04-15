@@ -8,11 +8,11 @@
     background-position: center;
     border: solid 2px #ffffff;
     border-radius: 2px;
+    transition: all 1s ease 0s;
 }
 
 .profile__add-button:hover {
     opacity: .6;
-    transition: all 1s ease 0s;
 }
 
 @media screen and (max-width: 1279px) {

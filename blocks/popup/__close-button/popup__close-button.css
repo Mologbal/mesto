@@ -12,11 +12,11 @@
     padding: 0;
     top: -40px;
     right: -435px;
+    transition: all 1s ease 0s;
 }
 
 .popup__close-button:hover {
     opacity: .6;
-    transition: all 1s ease 0s;
 }
 
 @media screen and (max-width: 845px) {
