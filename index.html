@@ -19,9 +19,9 @@
             <div class="profile__box">
                 <img class="profile__avatar" src="./images/ava.svg" alt="аватарка">
                 <div class="profile__info">
-                        <h1 class="profile__info-name">Жак-Ив Кусто
-                        </h1>
-                        <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
+                    <h1 class="profile__info-name">Жак-Ив Кусто
+                    </h1>
+                    <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
                     <p class="profile__info-passion">Исследователь океана</p>
                 </div>
             </div>
@@ -29,7 +29,9 @@
         </section>
 
         <section class="elements">
+            <!--
             <div class="elements__element">
+                <button class="elements__delete-button" type="button"></button>
                 <img class="elements__element-image" src="./images/Karathaevsk.png" alt="Храм в Карачаевске">
                 <div class="elements__element-box">
                     <h2 class="elements__element-subtitle">Карачаевск</h2>
@@ -37,6 +39,7 @@
                 </div>
             </div>
             <div class="elements__element">
+                <button class="elements__delete-button" type="button"></button>
                 <img class="elements__element-image" src="./images/gora.png" alt="Закат на Эльбрусе">
                 <div class="elements__element-box">
                     <h2 class="elements__element-subtitle">Гора Эльбрус</h2>
@@ -44,6 +47,7 @@
                 </div>
             </div>
             <div class="elements__element">
+                <button class="elements__delete-button" type="button"></button>
                 <img class="elements__element-image" src="./images/zakat.png" alt="Гора Домбай">
                 <div class="elements__element-box">
                     <h2 class="elements__element-subtitle">Домбай</h2>
@@ -51,6 +55,7 @@
                 </div>
             </div>
             <div class="elements__element">
+                <button class="elements__delete-button" type="button"></button>
                 <img class="elements__element-image" src="./images/divnogorie.jpg" alt="Дивногорье">
                 <div class="elements__element-box">
                     <h2 class="elements__element-subtitle">Дивногорье</h2>
@@ -58,6 +63,7 @@
                 </div>
             </div>
             <div class="elements__element">
+                <button class="elements__delete-button" type="button"></button>
                 <img class="elements__element-image" src="./images/vulkanMaliiSemiachik.jpg" alt="Вулкан Семячик">
                 <div class="elements__element-box">
                     <h2 class="elements__element-subtitle">Вулкан Семячик</h2>
@@ -65,20 +71,24 @@
                 </div>
             </div>
             <div class="elements__element">
+                <button class="elements__delete-button" type="button"></button>
                 <img class="elements__element-image" src="./images/baikallol.jpg" alt="Озеро Байкал">
                 <div class="elements__element-box">
                     <h2 class="elements__element-subtitle">Озеро Байкал</h2>
                     <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
                 </div>
             </div>
+            -->
         </section>
+
     </main>
 
     <footer class="footer">
         <p class="footer__title">© 2022 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <!-- Попап редактирования профиля  -->
+    <div class="popup" id="popup-profile">
         <div class="popup__window">
             <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
@@ -91,6 +101,46 @@
             </form>
         </div>
     </div>
+
+    <!-- Попап для добавления карточек   -->
+    <div class="popup" id="popup-cards">
+        <div class="popup__window">
+            <button class="popup__close-button" id="popup-cards-close-button" type="button"
+                aria-label="Закрыть"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__placeholder" id="popup-cards-form" name="popup__form">
+                <input class="popup__placeholder-input popup__placeholder-input_type_name" id="popup-cards-name"
+                    type="text" placeholder="Название" value="" name="popup-name">
+                <input class="popup__placeholder-input popup__placeholder-input_type_passion" id="popup-cards-link"
+                    type="text" placeholder="Ссылка на картинку" value="" name="popup-passion">
+                <button class="popup__save-button" id="popupCards-save-button" type="submit"
+                    aria-label="Сохранить">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Попап для приближения картинки   -->
+    <div class="popup" id="popup-approximation">
+        <div class="popup__image-container">
+            <button class="popup__close-button popup__close-button_ap" id="popup-approximation-close-button"
+                type="button" aria-label="Закрыть"></button>
+            <img class="popup__image" src="https://dummyimage.com/600x400/000/fff&text=Заглушка" alt="Картинка из карточки">
+            <p class="popup__image-title">Картинка из карточки</p>
+        </div>
+    </div>
+
+
+    <template class="template-cards">
+        <div class="elements__element">
+            <button class="elements__delete-button" type="button"></button>
+            <img class="elements__element-image" src="" alt="Моё место">
+            <div class="elements__element-box">
+                <h2 class="elements__element-subtitle"></h2>
+                <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+            </div>
+        </div>
+    </template>
+
     <script src="./scripts/scripts.js"></script>
 </body>
 

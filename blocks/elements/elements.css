@@ -1,25 +1,27 @@
 .elements {
-    display: flex;
-    flex-wrap: wrap;
-    width: 68.75%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    max-width: 68.75%;
     margin: auto;
     margin-top: 47.25px;
     color: black;
     row-gap: 17px;
     column-gap: 17px;
+    justify-content: center;
+    align-items: center;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 1000px) {
     .elements {
-        align-items: center;
-        justify-content: center;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
     }
 }
 
-@media screen and (max-width: 845px) {
+@media screen and (max-width: 606px) {
     .elements {
-        width: 282px;
-        margin-top: 36px;
-        row-gap: 23px;
+        display: flex;
+        flex-direction: column;
     }
 }
