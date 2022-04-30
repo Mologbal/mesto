@@ -3,6 +3,7 @@
     height: 361px;
     border-radius: 10px;
     margin: auto;
+    list-style-type: none;
 }
 
 @media screen and (max-width: 1279px) {

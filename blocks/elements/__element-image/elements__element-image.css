@@ -6,4 +6,5 @@
     border-top-right-radius: 10px;
     /* Ниже попытка решить проблему "нестандартной картинки, верна ли она? */
     object-fit: cover;
+    object-position: center;
 }
