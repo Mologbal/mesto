@@ -35,7 +35,7 @@ const passionOrigin = document.querySelector('.profile__info-passion');
 const saveButton = document.querySelector('.popup__save-button')
 const closePopupButton = document.querySelector('.popup__close-button');
 const addButton = document.querySelector('.profile__add-button');
-const popupCards = document.querySelector('#popup-cards');
+const popupAddCard = document.querySelector('#popup-cards');
 const createToogle = document.querySelector('#popup-cards-form');
 const closePopupButtonCards = document.querySelector('#popup-cards-close-button');
 const cardsContainer = document.querySelector('.elements');
@@ -44,7 +44,7 @@ const templateCards = document.querySelector('.template-cards').content;
 const formElement = document.querySelector('.popup__placeholder');
 const savePlace = document.querySelector('#popupCards-save-button')
 const closeAp = document.querySelector('#popup-approximation-close-button')
-const popupAp = document.querySelector('#popup-approximation')
+const popupImgApproach = document.querySelector('#popup-approximation')
 const popupImage = document.querySelector(".popup__image");
 const ImageTitle = document.querySelector(".popup__image-title");
 const imgcard = document.querySelector(".elements__element-image");
@@ -52,20 +52,21 @@ const cardtext = document.querySelector(".elements__element-subtitle");
 const name = document.querySelector('#popup-cards-name');
 const link = document.querySelector('#popup-cards-link');
 
-//Открыть попап Профиля
-function popupEnableToggle(popupProfile) {
+//Открыть попап-ы
+function openPopup(popupProfile) {
     popupProfile.classList.add('popup_enable');
 }
 
-//Закрыть попап Профиля
-function popupDisableToggle(popupProfile) {
+//Закрыть попап-ы
+function closePopup(popupProfile) {
     popupProfile.classList.remove('popup_enable');
 }
 
-// Закрыть нажав по области вокруг попапа Профиля
-function popupOverlayClickHandler(evt) {
+// Закрытие попап-ов по клику за пределы их окон
+function handleOverlayClose(evt) {
     if (evt.target === evt.currentTarget) {
-        popupDisableToggle(popupProfile);
+        const popupAcrive = document.querySelector(".popup_enable");
+        closePopup(popupAcrive);
     }
 }
 
@@ -74,104 +75,69 @@ function popupProfileSaveButton(event) {
     event.preventDefault();
     nameOrigin.textContent = nameInput.value;
     passionOrigin.textContent = passionInput.value;
-    popupDisableToggle(popupProfile);
-}
-
-//Открыть попап(карточки)
-function popupEnableToggleCards(popupCards) {
-    popupCards.classList.add('popup_enable');
-}
-
-//закрыть попап (карточки)
-function popupDisableToggleCards() {
-    popupCards.classList.remove('popup_enable');
-}
-
-// Закрыть нажав по области вокруг попапа(карточек) // не совсем понимаю если "передавать данную константу в функцию закрытия. " то при клике даже НА САМ попап будет закрытие :(
-function popupOverlayClickHandlerCards(evt) {
-    if (evt.target === evt.currentTarget) {
-        popupDisableToggleCards();
-    }
-}
-
-// Закрыть нажав по области вокруг попапа(Изображения)   
-function popupOverlayClickHandlerAp(evt) {
-    if (evt.target === evt.currentTarget) {
-        popupDisableToggleAp(popupAp);
-    }
-}
-
-//открытие попапа приближения
-function popupEnableToggleAp(popupAp) {
-    popupAp.classList.add('popup_enable')
-}
-
-// закрытие попапа увеличения
-function popupDisableToggleAp(popupAp) {
-    popupAp.classList.remove('popup_enable');
+    closePopup(popupProfile);
 }
 
 //Функция создания карточки (после 1го ревью)
-const createCard = (item) => {
-    const elementCards = templateCards.cloneNode(true);
-    elementCards.querySelector('.elements__element-image').src = item.link;
-    elementCards.querySelector('.elements__element-image').alt = item.name;
-    elementCards.querySelector('.elements__element-subtitle').textContent = item.name;
-    elementCards.querySelector('.elements__element-like').addEventListener('click', function (event) {
+const createCard = (cardsInformation) => {
+    const cardElement = templateCards.cloneNode(true);
+    cardElement.querySelector('.elements__element-image').src = cardsInformation.link;
+    cardElement.querySelector('.elements__element-image').alt = cardsInformation.name;
+    cardElement.querySelector('.elements__element-subtitle').textContent = cardsInformation.name;
+    cardElement.querySelector('.elements__element-like').addEventListener('click', function (event) {
         event.target.classList.toggle('elements__element-like_activated');
     })
-    elementCards.querySelector('.elements__delete-button').addEventListener('click', function (event) {
+    cardElement.querySelector('.elements__delete-button').addEventListener('click', function (event) {
         event.target.closest('.elements__element').remove();
     })
-    elementCards.querySelector('.elements__element-image').addEventListener('click', function (event) {
-        imagePopUpHandler(item);
+    cardElement.querySelector('.elements__element-image').addEventListener('click', function (event) {
+        imagePopUpHandler(cardsInformation);
     })
-    return elementCards;
+    return cardElement;
 }
 
 //Функция добавления карточки в контейнер (после 1го ревью)
-const addCard = (item) => {
-    cardsContainer.prepend(createCard(item));
+const addCard = (cardsInformation) => {
+    cardsContainer.prepend(createCard(cardsInformation));
 }
 
 //обработчик увеличивающего попапа (после 1го ревью)
-function imagePopUpHandler(item) {
-    popupImage.src = item.link;
-    popupImage.alt = item.name;
-    ImageTitle.textContent = item.name;
-    popupEnableToggleAp(popupAp);
+function imagePopUpHandler(cardsInformation) {
+    popupImage.src = cardsInformation.link;
+    popupImage.alt = cardsInformation.name;
+    ImageTitle.textContent = cardsInformation.name;
+    openPopup(popupImgApproach);
 }
 
 //Функция для изначальных карточек (после 1го ревью)
-initialCards.forEach((item) => {
-    addCard(item);
+initialCards.forEach((cardsInformation) => {
+    addCard(cardsInformation);
 })
 
-//Список нужных addEventListener вне функций (после 1го ревью)
+//Список нужных addEventListener-ов вне функций (после 1го ревью)
 const formSubmitHandlerCard = (event) => {
     event.preventDefault();
     addCard({
         name: name.value,
         link: link.value
     });
-    popupDisableToggleCards();
-    //не понимаю час пытался сделать reset и с value, и без, как только не пытался, искал инфу, но ничего не очищало, видимо что-то не понимаю :С
-    name.value = "";
-    link.value = "";
+    closePopup(popupAddCard);
+    createToogle.reset(); //Большое спасибо, теперь понял, кошмар пытался инпуты ресетать больше 2х часов! C:
 }
+
 createToogle.addEventListener('submit', formSubmitHandlerCard)
 
 openPopupButton.addEventListener('click', function (evt) {
     evt.preventDefault();
     nameInput.value = nameOrigin.textContent;
     passionInput.value = passionOrigin.textContent;
-    popupEnableToggle(popupProfile);
+    openPopup(popupProfile);
 });
-closePopupButton.addEventListener('click', () => popupDisableToggle(popupProfile));
-popupProfile.addEventListener('click', popupOverlayClickHandler);
+closePopupButton.addEventListener('click', () => closePopup(popupProfile));
+popupProfile.addEventListener('click', handleOverlayClose);
 formElement.addEventListener('submit', popupProfileSaveButton);
-addButton.addEventListener('click', () => popupEnableToggleCards(popupCards));
-closePopupButtonCards.addEventListener('click', popupDisableToggleCards);
-popupCards.addEventListener('click', popupOverlayClickHandlerCards);
-closeAp.addEventListener('click', () => popupDisableToggleAp(popupAp));
-popupAp.addEventListener('click', popupOverlayClickHandlerAp)
+addButton.addEventListener('click', () => openPopup(popupAddCard));
+closePopupButtonCards.addEventListener('click', () => closePopup(popupAddCard));
+popupAddCard.addEventListener('click', handleOverlayClose);
+closeAp.addEventListener('click', () => closePopup(popupImgApproach));
+popupImgApproach.addEventListener('click', handleOverlayClose)
