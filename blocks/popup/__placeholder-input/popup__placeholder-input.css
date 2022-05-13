@@ -1,6 +1,6 @@
 .popup__placeholder-input {
     width: 358px;
-    height: 14px;
+    height: 27px;
     display: flex;
     font-size: 14px;
     line-height: 16.94px;
@@ -12,12 +12,15 @@
     overflow: hidden;
     outline: none;
     padding: 0;
-    padding-bottom: 13px;
     border-color: rgba(0, 0, 0, .2);
     margin: auto;
     margin-top: 0;
     margin-bottom: 30px;
 }
+
+
+
+
 
 .popup__placeholder-input:last-of-type {
     margin-bottom: 0;

@@ -19,8 +19,7 @@
             <div class="profile__box">
                 <img class="profile__avatar" src="./images/ava.svg" alt="аватарка">
                 <div class="profile__info">
-                    <h1 class="profile__info-name">Жак-Ив Кусто
-                    </h1>
+                    <h1 class="profile__info-name">Жак-Ив Кусто</h1>
                     <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
                     <p class="profile__info-passion">Исследователь океана</p>
                 </div>
@@ -42,12 +41,20 @@
         <div class="popup__window">
             <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__placeholder" name="popup__form">
-                <input class="popup__placeholder-input popup__placeholder-input_type_name" type="text" value=""
-                    name="popup-name" placeholder="Имя">
-                <input class="popup__placeholder-input popup__placeholder-input_type_passion" type="text" value=""
-                    name="popup-passion" placeholder="Профессиональная деятельность">
-                <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
+            <form class="popup__placeholder" name="popup__form" novalidate>
+                <div class="popup__input-container">
+                    <input class="popup__placeholder-input popup__placeholder-input_type_name" id="name" type="text"
+                        value="" name="popup-name" placeholder="Имя" minlength="2" maxlength="40" required>
+                    <span id="error-name" class="popup__error"></span>
+                </div>
+                <div class="popup__input-container">
+                    <input class="popup__placeholder-input popup__placeholder-input_type_passion" id="passion"
+                        type="text" value="" name="popup-passion" placeholder="Профессиональная деятельность"
+                        minlength="2" maxlength="200" required>
+                    <span id="error-passion" class="popup__error"></span>
+                </div>
+                <button class="popup__save-button" id="saveProfile" type="submit"
+                    aria-label="Сохранить">Сохранить</button>
             </form>
         </div>
     </div>
@@ -58,11 +65,17 @@
             <button class="popup__close-button" id="popup-cards-close-button" type="button"
                 aria-label="Закрыть"></button>
             <h2 class="popup__title">Новое место</h2>
-            <form class="popup__placeholder" id="popup-cards-form" name="popup__form">
-                <input class="popup__placeholder-input popup__placeholder-input_type_name" id="popup-cards-name"
-                    type="text" placeholder="Название" value="" name="popup-name">
-                <input class="popup__placeholder-input popup__placeholder-input_type_passion" id="popup-cards-link"
-                    type="text" placeholder="Ссылка на картинку" value="" name="popup-passion">
+            <form class="popup__placeholder" id="popup-cards-form" name="popup__form" novalidate>
+                <div class="popup__input-container">
+                    <input class="popup__placeholder-input popup__placeholder-input_type_name" id="place" type="text"
+                        placeholder="Название" value="" name="popup-name" minlength="2" maxlength="30" required>
+                    <span id="error-place" class="popup__error"></span>
+                </div>
+                <div class="popup__input-container">
+                    <input class="popup__placeholder-input popup__placeholder-input_type_passion" id="link" type="url"
+                        placeholder="Ссылка на картинку" value="" name="popup-passion" required>
+                    <span id="error-link" class="popup__error"></span>
+                </div>
                 <button class="popup__save-button" id="popupCards-save-button" type="submit"
                     aria-label="Сохранить">Создать</button>
             </form>
@@ -94,6 +107,7 @@
     </template>
 
     <script src="./scripts/scripts.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 
 </html>

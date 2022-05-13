@@ -1,0 +1,11 @@
+.popup__input-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 29px;
+}
+
+.popup__input-container:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 31.34px;
+}
+
