@@ -1,90 +1,63 @@
-//Массив с изначальными карточками
-const initialCards = [{
-    name: 'Юловский пруд',
-    link: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/a1/eb/63/caption.jpg?w=1200&h=-1&s=1'
-  },
-  {
-    name: 'Горы Шиханы',
-    link: 'https://nashural.ru/assets/uploads/sterlitamak-shihany06.jpg'
-  },
-  {
-    name: 'Чарские пески',
-    link: 'https://www.russiadiscovery.ru/upload/files/files/Чарские_пески.jpg'
-  },
-  {
-    name: 'Куршская коса',
-    link: 'https://www.russiadiscovery.ru/upload/files/files/Национальный_парк_Куршская_коса_4.jpg'
-  },
-  {
-    name: 'Остров Врангеля',
-    link: 'https://www.russiadiscovery.ru/upload/files/files/Kruiz%20na%20ostrov%20Vrangelya_35%281%29.jpg'
-  },
-  {
-    name: 'Большой Тxач',
-    link: 'https://cdn.lifehacker.ru/wp-content/uploads/2019/05/Txach_Artyem_Kharchenko-Shutterstock_1599818258.jpg'
-  }
-];
 //переменные которые используются в проекте вне функций
 const popupProfile = document.querySelector('.popup');
-const openPopupButton = document.querySelector('.profile__edit-button');
+const buttonOpenPopup = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__placeholder-input_type_name');
 const passionInput = document.querySelector('.popup__placeholder-input_type_passion');
 const nameOrigin = document.querySelector('.profile__info-name');
+const nameEr = document.querySelector('#error-name')
+const namePas = document.querySelector('#error-passion')
+const namePlace = document.querySelector('#error-place')
+const nameLink = document.querySelector('#error-link')
 const passionOrigin = document.querySelector('.profile__info-passion');
-const saveButton = document.querySelector('.popup__save-button')
-const closePopupButton = document.querySelector('.popup__close-button');
-const addButton = document.querySelector('.profile__add-button');
+const buttonSave = document.querySelector('.popup__save-button')
+const buttonClosePopup = document.querySelector('.popup__close-button');
+const buttonAdd = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#popup-cards');
-const createToogle = document.querySelector('#popup-cards-form');
-const closePopupButtonCards = document.querySelector('#popup-cards-close-button');
+const toogleCreate = document.querySelector('#popup-cards-form');
+const buttonClosePopupCards = document.querySelector('#popup-cards-close-button');
 const cardsContainer = document.querySelector('.elements');
 const contentDelete = document.querySelector('.elements__delete-button');
 const templateCards = document.querySelector('.template-cards').content;
 const formElement = document.querySelector('.popup__placeholder');
-const savePlace = document.querySelector('#popupCards-save-button')
-const closeAp = document.querySelector('#popup-approximation-close-button')
+const placeSave = document.querySelector('#popupCards-save-button')
+const apClose = document.querySelector('#popup-approximation-close-button')
 const popupImgApproach = document.querySelector('#popup-approximation')
 const popupImage = document.querySelector(".popup__image");
-const ImageTitle = document.querySelector(".popup__image-title");
+const imageTitle = document.querySelector(".popup__image-title");
 const imgcard = document.querySelector(".elements__element-image");
 const cardtext = document.querySelector(".elements__element-subtitle");
 const place = document.querySelector('#place');
 const link = document.querySelector('#link');
-const saveProfile = document.querySelector('#saveProfile')
+const profileSave = document.querySelector('#saveProfile')
+
+
 
 
 //Функции Проекта
 
-//очистка полей ошибок при повторном открытии попапов
-function letsCleanErrors() {
-  const spanName = document.querySelector('#error-name')
-  const spanPassion = document.querySelector('#error-passion')
-  const spanPlace = document.querySelector('#error-place')
-  const spanLink = document.querySelector('#error-link')
-  spanName.textContent = ''
-  spanPassion.textContent = ''
-  spanPlace.textContent = ''
-  spanLink.textContent = ''
-}
-
 //Открыть попап-ы
 function openPopup(popupProfile) {
   popupProfile.classList.add('popup_enable');
-  letsCleanErrors()
-  const inputList = Array.from(formElement.querySelectorAll(`.popup__placeholder-input`));
-  const buttonElement = formElement.querySelector('.popup__save-button');
-  toggleButtonState(inputList, buttonElement);
+  document.addEventListener('keydown', handleOverlayCloseEsc);
 }
 
 //Закрыть попап-ы
 function closePopup(popupProfile) {
   popupProfile.classList.remove('popup_enable');
-  createToogle.reset();
+  document.removeEventListener('keydown', handleOverlayCloseEsc);
 }
 
-// Закрытие попап-ов по клику за пределы их окон или нажатием 'Esp'
+// Закрытие попап-ов по клику за пределы их окон
 function handleOverlayClose(evt) {
-  if ((openPopup && evt.key === 'Escape') || evt.target === evt.currentTarget) {
+  if (evt.target === evt.currentTarget) {
+    const popupAcrive = document.querySelector(".popup_enable");
+    closePopup(popupAcrive);
+  }
+}
+
+//Закрытие попапов по нажатию 'Esc'
+function handleOverlayCloseEsc(evt) {
+  if (evt.key === 'Escape') {
     const popupAcrive = document.querySelector(".popup_enable");
     closePopup(popupAcrive);
   }
@@ -125,7 +98,7 @@ const addCard = (cardsInformation) => {
 function imagePopUpHandler(cardsInformation) {
   popupImage.src = cardsInformation.link;
   popupImage.alt = cardsInformation.name;
-  ImageTitle.textContent = cardsInformation.name;
+  imageTitle.textContent = cardsInformation.name;
   openPopup(popupImgApproach);
 }
 
@@ -133,11 +106,6 @@ function imagePopUpHandler(cardsInformation) {
 initialCards.forEach((cardsInformation) => {
   addCard(cardsInformation);
 })
-
-//Блокировка кнопки "создать карточку" с пустыми значениями после добавления предыдущей
-function createCardsDisable() {
-  savePlace.classList.add('form__submit_inactive');
-}
 
 //функция добавляющая в новую карточку необходимые данные
 const formSubmitHandlerCard = (event) => {
@@ -147,27 +115,36 @@ const formSubmitHandlerCard = (event) => {
     link: link.value,
   });
   closePopup(popupAddCard);
-  createToogle.reset();
-  createCardsDisable()
+  toogleCreate.reset();
 }
 
 
 //Список нужных addEventListener-ов вне функций 
-createToogle.addEventListener('submit', formSubmitHandlerCard)
+toogleCreate.addEventListener('submit', formSubmitHandlerCard)
 
-openPopupButton.addEventListener('click', function (evt) {
+buttonOpenPopup.addEventListener('click', function (evt) {
   evt.preventDefault();
   nameInput.value = nameOrigin.textContent;
   passionInput.value = passionOrigin.textContent;
+  nameEr.textContent = '';
+  namePas.textContent = '';
+  enableValidation(validationConfig)
   openPopup(popupProfile);
 });
-closePopupButton.addEventListener('click', () => closePopup(popupProfile));
+buttonClosePopup.addEventListener('click', () => closePopup(popupProfile));
 popupProfile.addEventListener('click', handleOverlayClose);
-addButton.addEventListener('click', () => openPopup(popupAddCard));
-closePopupButtonCards.addEventListener('click', () => closePopup(popupAddCard));
+buttonAdd.addEventListener('click', function () {
+  toogleCreate.reset();
+  namePlace.textContent = '';
+  nameLink.textContent = '';
+  enableValidation(validationConfig)
+  openPopup(popupAddCard);
+})
+buttonClosePopupCards.addEventListener('click', function () {
+  closePopup(popupAddCard);
+})
 popupAddCard.addEventListener('click', handleOverlayClose);
-closeAp.addEventListener('click', () => closePopup(popupImgApproach));
+apClose.addEventListener('click', () => closePopup(popupImgApproach));
 popupImgApproach.addEventListener('click', handleOverlayClose);
-saveProfile.addEventListener('click', popupProfileSaveButton);
+profileSave.addEventListener('click', popupProfileSaveButton);
 //закрытие попапов по 'Esc'
-document.addEventListener('keydown', handleOverlayClose);
