@@ -13,11 +13,11 @@ const validationConfig = {
 const setEventListeners = (formElement, validationConfig) => {
     const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
-    toggleButtonState(inputList, buttonElement);
+    toggleButtonState(inputList, buttonElement, validationConfig);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
-            isValid(formElement, inputElement);
-            toggleButtonState(inputList, buttonElement);
+            isValid(formElement, inputElement, validationConfig);
+            toggleButtonState(inputList, buttonElement, validationConfig);
         });
     });
 };
@@ -41,7 +41,7 @@ const hasInvalidInput = (inputList) => {
 };
 
 //функция определяющая делать кнопки активными или отключать их
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement, validationConfig) => {
     if (hasInvalidInput(inputList)) {
         buttonElement.classList.add(validationConfig.inactiveButtonClass);
         buttonElement.setAttribute('disabled', 'disabled');
@@ -52,7 +52,7 @@ const toggleButtonState = (inputList, buttonElement) => {
 };
 
 //показать ошибку
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
     const errorElement = formElement.querySelector(`#error-${inputElement.id}`);
     inputElement.classList.add(validationConfig.inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -60,7 +60,7 @@ const showInputError = (formElement, inputElement, errorMessage) => {
 };
 
 // спрятать ошибку 
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`#error-${inputElement.id}`);
     inputElement.classList.remove(validationConfig.inputErrorClass);
     errorElement.classList.remove(validationConfig.errorClass);
@@ -68,13 +68,20 @@ const hideInputError = (formElement, inputElement) => {
 };
 
 //функция для проверки валидности данных
-const isValid = (formElement, inputElement) => {
+const isValid = (formElement, inputElement, validationConfig) => {
     if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage);
+        showInputError(formElement, inputElement, inputElement.validationMessage, validationConfig);
     } else {
-        hideInputError(formElement, inputElement);
+        hideInputError(formElement, inputElement, validationConfig);
     }
 };
 
+const letscleanErrors = (validationConfig) => {
+    const inputList = Array.from(document.querySelectorAll(validationConfig.errorText));
+    inputList.forEach((inputElement) => {
+        inputElement.textContent = ''
+    }
+    )
+}
 // Вызов валидации
 enableValidation(validationConfig);

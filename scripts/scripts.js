@@ -4,12 +4,12 @@ const buttonOpenPopup = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__placeholder-input_type_name');
 const passionInput = document.querySelector('.popup__placeholder-input_type_passion');
 const nameOrigin = document.querySelector('.profile__info-name');
-const nameEr = document.querySelector('#error-name')
-const namePas = document.querySelector('#error-passion')
-const namePlace = document.querySelector('#error-place')
-const nameLink = document.querySelector('#error-link')
+const nameEr = document.querySelector('#error-name');
+const namePas = document.querySelector('#error-passion');
+const namePlace = document.querySelector('#error-place');
+const nameLink = document.querySelector('#error-link');
 const passionOrigin = document.querySelector('.profile__info-passion');
-const buttonSave = document.querySelector('.popup__save-button')
+const buttonSave = document.querySelector('.popup__save-button');
 const buttonClosePopup = document.querySelector('.popup__close-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#popup-cards');
@@ -19,16 +19,16 @@ const cardsContainer = document.querySelector('.elements');
 const contentDelete = document.querySelector('.elements__delete-button');
 const templateCards = document.querySelector('.template-cards').content;
 const formElement = document.querySelector('.popup__placeholder');
-const placeSave = document.querySelector('#popupCards-save-button')
-const apClose = document.querySelector('#popup-approximation-close-button')
-const popupImgApproach = document.querySelector('#popup-approximation')
+const placeSave = document.querySelector('#popupCards-save-button');
+const apClose = document.querySelector('#popup-approximation-close-button');
+const popupImgApproach = document.querySelector('#popup-approximation');
 const popupImage = document.querySelector(".popup__image");
 const imageTitle = document.querySelector(".popup__image-title");
 const imgcard = document.querySelector(".elements__element-image");
 const cardtext = document.querySelector(".elements__element-subtitle");
 const place = document.querySelector('#place');
 const link = document.querySelector('#link');
-const profileSave = document.querySelector('#saveProfile')
+const profileSave = document.querySelector('#saveProfile');
 
 
 
@@ -68,7 +68,7 @@ function popupProfileSaveButton(event) {
   event.preventDefault();
   nameOrigin.textContent = nameInput.value;
   passionOrigin.textContent = passionInput.value;
-  closePopup(popupProfile)
+  closePopup(popupProfile);
 }
 
 //Функция создания карточки
@@ -120,24 +120,22 @@ const formSubmitHandlerCard = (event) => {
 
 
 //Список нужных addEventListener-ов вне функций 
-toogleCreate.addEventListener('submit', formSubmitHandlerCard)
+toogleCreate.addEventListener('submit', formSubmitHandlerCard);
 
 buttonOpenPopup.addEventListener('click', function (evt) {
   evt.preventDefault();
   nameInput.value = nameOrigin.textContent;
   passionInput.value = passionOrigin.textContent;
-  nameEr.textContent = '';
-  namePas.textContent = '';
-  enableValidation(validationConfig)
+  letscleanErrors(validationConfig);
+  enableValidation(validationConfig);
   openPopup(popupProfile);
 });
 buttonClosePopup.addEventListener('click', () => closePopup(popupProfile));
 popupProfile.addEventListener('click', handleOverlayClose);
 buttonAdd.addEventListener('click', function () {
   toogleCreate.reset();
-  namePlace.textContent = '';
-  nameLink.textContent = '';
-  enableValidation(validationConfig)
+  letscleanErrors(validationConfig);
+  enableValidation(validationConfig);
   openPopup(popupAddCard);
 })
 buttonClosePopupCards.addEventListener('click', function () {
