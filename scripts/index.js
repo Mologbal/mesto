@@ -1,3 +1,42 @@
+import {
+  Card
+} from "./Card.js";
+import {
+  FormValidator
+} from "./FormValidator.js";
+import {
+  obj
+} from './FormValidator.js';
+
+
+//Массив с изначальными карточками
+const initialCards = [{
+    name: 'Юловский пруд',
+    link: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/a1/eb/63/caption.jpg?w=1200&h=-1&s=1'
+  },
+  {
+    name: 'Горы Шиханы',
+    link: 'https://nashural.ru/assets/uploads/sterlitamak-shihany06.jpg'
+  },
+  {
+    name: 'Чарские пески',
+    link: 'https://www.russiadiscovery.ru/upload/files/files/Чарские_пески.jpg'
+  },
+  {
+    name: 'Куршская коса',
+    link: 'https://www.russiadiscovery.ru/upload/files/files/Национальный_парк_Куршская_коса_4.jpg'
+  },
+  {
+    name: 'Остров Врангеля',
+    link: 'https://www.russiadiscovery.ru/upload/files/files/Kruiz%20na%20ostrov%20Vrangelya_35%281%29.jpg'
+  },
+  {
+    name: 'Большой Тxач',
+    link: 'https://cdn.lifehacker.ru/wp-content/uploads/2019/05/Txach_Artyem_Kharchenko-Shutterstock_1599818258.jpg'
+  }
+];
+
+
 //переменные которые используются в проекте вне функций
 const popupProfile = document.querySelector('.popup');
 const buttonOpenPopup = document.querySelector('.profile__edit-button');
@@ -29,8 +68,6 @@ const cardtext = document.querySelector(".elements__element-subtitle");
 const place = document.querySelector('#place');
 const link = document.querySelector('#link');
 const profileSave = document.querySelector('#saveProfile');
-
-
 
 
 //Функции Проекта
@@ -71,29 +108,6 @@ function popupProfileSaveButton(event) {
   closePopup(popupProfile);
 }
 
-//Функция создания карточки
-const createCard = (cardsInformation) => {
-  const cardElement = templateCards.cloneNode(true);
-  cardElement.querySelector('.elements__element-image').src = cardsInformation.link;
-  cardElement.querySelector('.elements__element-image').alt = cardsInformation.name;
-  cardElement.querySelector('.elements__element-subtitle').textContent = cardsInformation.name;
-  cardElement.querySelector('.elements__element-like').addEventListener('click', function (event) {
-    event.target.classList.toggle('elements__element-like_activated');
-  })
-  cardElement.querySelector('.elements__delete-button').addEventListener('click', function (event) {
-    event.target.closest('.elements__element').remove();
-  })
-  cardElement.querySelector('.elements__element-image').addEventListener('click', function (event) {
-    imagePopUpHandler(cardsInformation);
-  })
-  return cardElement;
-}
-
-//Функция добавления карточки в контейнер
-const addCard = (cardsInformation) => {
-  cardsContainer.prepend(createCard(cardsInformation));
-}
-
 //обработчик увеличивающего попапа
 function imagePopUpHandler(cardsInformation) {
   popupImage.src = cardsInformation.link;
@@ -102,47 +116,64 @@ function imagePopUpHandler(cardsInformation) {
   openPopup(popupImgApproach);
 }
 
+//!!Секция функций которые работают с модулем "Card"!!
+
+//Функция добавления карточки в контейнер
+const addCard = (cardsContainer, newCard) => {
+  cardsContainer.prepend(newCard);
+}
+
+//Функция создания карточки
+const createCard = (cardsInformation) => {
+  const newCard = new Card(cardsInformation, 'template__element', imagePopUpHandler);
+  return newCard.generateCard(cardsInformation);
+}
+
 //Функция для изначальных карточек
 initialCards.forEach((cardsInformation) => {
-  addCard(cardsInformation);
+  const newCard = createCard(cardsInformation);
+  addCard(cardsContainer, newCard)
 })
 
 //функция добавляющая в новую карточку необходимые данные
 const formSubmitHandlerCard = (event) => {
   event.preventDefault();
-  addCard({
+  addCard(cardsContainer, createCard({
     name: place.value,
     link: link.value,
-  });
+  }))
   closePopup(popupAddCard);
   toogleCreate.reset();
 }
 
-
 //Список нужных addEventListener-ов вне функций 
 toogleCreate.addEventListener('submit', formSubmitHandlerCard);
-
-buttonOpenPopup.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  nameInput.value = nameOrigin.textContent;
-  passionInput.value = passionOrigin.textContent;
-  letscleanErrors(validationConfig);
-  enableValidation(validationConfig);
-  openPopup(popupProfile);
-});
-buttonClosePopup.addEventListener('click', () => closePopup(popupProfile));
-popupProfile.addEventListener('click', handleOverlayClose);
-buttonAdd.addEventListener('click', function () {
-  toogleCreate.reset();
-  letscleanErrors(validationConfig);
-  enableValidation(validationConfig);
-  openPopup(popupAddCard);
-})
 buttonClosePopupCards.addEventListener('click', function () {
   closePopup(popupAddCard);
 })
+buttonClosePopup.addEventListener('click', () => closePopup(popupProfile));
+popupProfile.addEventListener('click', handleOverlayClose);
 popupAddCard.addEventListener('click', handleOverlayClose);
 apClose.addEventListener('click', () => closePopup(popupImgApproach));
 popupImgApproach.addEventListener('click', handleOverlayClose);
 profileSave.addEventListener('click', popupProfileSaveButton);
-//закрытие попапов по 'Esc'
+
+//!!Секция слушателей работающих с модулем 'FormValidator'!!
+const validationEditPopup = new FormValidator(formElement, obj) //для попапа с профилем
+buttonOpenPopup.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  nameInput.value = nameOrigin.textContent;
+  passionInput.value = passionOrigin.textContent;
+  validationEditPopup.letscleanErrors(); //очистит поля сообщений ошибок, при повторном открытии попапа
+  validationEditPopup.enableValidation(); //проверит текст пользователя на предмет ошибок
+  openPopup(popupProfile);
+});
+
+const validationCardPopup = new FormValidator(toogleCreate, obj) // для попапа с карточками
+buttonAdd.addEventListener('click', function () {
+  toogleCreate.reset();
+  validationCardPopup.letscleanErrors();
+  validationCardPopup.toggleButtonState(); // не даст отправить пустую карточку, сразу при открытии
+  validationCardPopup.enableValidation();
+  openPopup(popupAddCard);
+})
