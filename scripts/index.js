@@ -7,35 +7,9 @@ import {
 import {
   obj
 } from './FormValidator.js';
-
-
-//Массив с изначальными карточками
-const initialCards = [{
-    name: 'Юловский пруд',
-    link: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/a1/eb/63/caption.jpg?w=1200&h=-1&s=1'
-  },
-  {
-    name: 'Горы Шиханы',
-    link: 'https://nashural.ru/assets/uploads/sterlitamak-shihany06.jpg'
-  },
-  {
-    name: 'Чарские пески',
-    link: 'https://www.russiadiscovery.ru/upload/files/files/Чарские_пески.jpg'
-  },
-  {
-    name: 'Куршская коса',
-    link: 'https://www.russiadiscovery.ru/upload/files/files/Национальный_парк_Куршская_коса_4.jpg'
-  },
-  {
-    name: 'Остров Врангеля',
-    link: 'https://www.russiadiscovery.ru/upload/files/files/Kruiz%20na%20ostrov%20Vrangelya_35%281%29.jpg'
-  },
-  {
-    name: 'Большой Тxач',
-    link: 'https://cdn.lifehacker.ru/wp-content/uploads/2019/05/Txach_Artyem_Kharchenko-Shutterstock_1599818258.jpg'
-  }
-];
-
+import {
+  initialCards
+} from './data.js'
 
 //переменные которые используются в проекте вне функций
 const popupProfile = document.querySelector('.popup');
@@ -136,7 +110,7 @@ initialCards.forEach((cardsInformation) => {
 })
 
 //функция добавляющая в новую карточку необходимые данные
-const formSubmitHandlerCard = (event) => {
+const sumbitFormHandlerCard = (event) => {
   event.preventDefault();
   addCard(cardsContainer, createCard({
     name: place.value,
@@ -147,7 +121,7 @@ const formSubmitHandlerCard = (event) => {
 }
 
 //Список нужных addEventListener-ов вне функций 
-toogleCreate.addEventListener('submit', formSubmitHandlerCard);
+toogleCreate.addEventListener('submit', sumbitFormHandlerCard);
 buttonClosePopupCards.addEventListener('click', function () {
   closePopup(popupAddCard);
 })
@@ -160,20 +134,20 @@ profileSave.addEventListener('click', popupProfileSaveButton);
 
 //!!Секция слушателей работающих с модулем 'FormValidator'!!
 const validationEditPopup = new FormValidator(formElement, obj) //для попапа с профилем
+validationEditPopup.enableValidation()
 buttonOpenPopup.addEventListener('click', function (evt) {
   evt.preventDefault();
   nameInput.value = nameOrigin.textContent;
   passionInput.value = passionOrigin.textContent;
   validationEditPopup.letscleanErrors(); //очистит поля сообщений ошибок, при повторном открытии попапа
-  validationEditPopup.enableValidation(); //проверит текст пользователя на предмет ошибок
   openPopup(popupProfile);
 });
 
 const validationCardPopup = new FormValidator(toogleCreate, obj) // для попапа с карточками
+validationCardPopup.enableValidation()
 buttonAdd.addEventListener('click', function () {
   toogleCreate.reset();
   validationCardPopup.letscleanErrors();
   validationCardPopup.toggleButtonState(); // не даст отправить пустую карточку, сразу при открытии
-  validationCardPopup.enableValidation();
   openPopup(popupAddCard);
 })

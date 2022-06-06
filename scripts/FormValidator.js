@@ -3,7 +3,7 @@ import {
 } from "./Card.js";
 
 //массив с настройками для enableValidation
- export const obj = {
+export const obj = {
     formSelector: ".popup__placeholder",
     inputSelector: ".popup__placeholder-input",
     submitButtonSelector: ".popup__save-button",
@@ -82,12 +82,11 @@ export class FormValidator {
         errorElement.textContent = '';
         errorElement.classList.remove(this._errorClass);
     }
-    
+
     letscleanErrors = () => {
         const inputList = Array.from(document.querySelectorAll(this._errorText));
         inputList.forEach((inputElement) => {
             inputElement.textContent = '';
-        }
-        )
+        })
     }
 }
