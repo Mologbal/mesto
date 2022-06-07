@@ -83,10 +83,10 @@ function popupProfileSaveButton(event) {
 }
 
 //обработчик увеличивающего попапа
-function imagePopUpHandler(cardsInformation) {
-  popupImage.src = cardsInformation.link;
-  popupImage.alt = cardsInformation.name;
-  imageTitle.textContent = cardsInformation.name;
+function imagePopupHandler(name, link) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  imageTitle.textContent = name;
   openPopup(popupImgApproach);
 }
 
@@ -99,7 +99,7 @@ const addCard = (cardsContainer, newCard) => {
 
 //Функция создания карточки
 const createCard = (cardsInformation) => {
-  const newCard = new Card(cardsInformation, 'template__element', imagePopUpHandler);
+  const newCard = new Card(cardsInformation, 'template__element', imagePopupHandler);
   return newCard.generateCard(cardsInformation);
 }
 
