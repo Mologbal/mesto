@@ -60,16 +60,23 @@ const place = document.querySelector('#place').value
 const link = document.querySelector('#link').value
 
 //добавление карточек в контейнер (Попап с карточками)
-const popupAdd = new PopupWithForm('#popup-cards', (formData) => {
-  const insertCard = createCard(place, link);
-  cardsList.addItem(insertCard); //я просидев 2 дня по 12 часов так и не понял в чем беда карточек, почему они приходят пустые :( Нужен какой то толстый намёк, мне глупому.
-  popupAdd.close();              // ради них переделывал весь проект 3 раза и не помогло, хоть плачь, все сроки проходят уже :(
-});
+const popupAdd = new PopupWithForm('#popup-cards', {
+  submitForm: (data) => {
+    const item = {
+      name: data.placeName,
+      link: data.placeLink
+    }
+    const insertCard = createCard(item);
+    cardsList.addItem(insertCard); 
+  }
+})
 popupAdd.setEventListeners();
 
 buttonAdd.addEventListener('click', openAddCardForm);
 
 function openAddCardForm() {
+  validationCardPopup.toggleButtonState()
+  validationCardPopup.letscleanErrors()
   popupAdd.open();
 }
 
@@ -82,7 +89,7 @@ const popupEdit = new PopupWithForm('#popup-profile', ({
 }) => {
   userInfo.setUserInfo({
     name: nameInput.value,
-    about: passionInput.value //просидел целый день, не понимаю почему у других студентов эта функция, как и та что выше не требует уточнений через : , а у меня работает только с уточнениями
+    about: passionInput.value 
   });
 })
 popupEdit.setEventListeners();

@@ -1,13 +1,13 @@
 .popup__close-button_ap {
+    width: 90px;
     position: absolute;
-    right: -40px;
-    top: -40px;
-
+    right: -70px;
 }
 
-@media screen and (max-width: 845px) {
+@media screen and (max-width: 660px) {
     .popup__close-button_ap {
         top: 90px;
-        right: -2px;
+        right: -65px
     }
 }
+    
