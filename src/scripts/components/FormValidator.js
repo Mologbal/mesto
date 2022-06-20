@@ -1,6 +1,6 @@
-import {
+import 
     Card
-} from "./Card.js";
+ from "./Card.js";
 
 //массив с настройками для enableValidation
 export const obj = {
