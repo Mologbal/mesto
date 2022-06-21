@@ -1,19 +1,3 @@
-import 
-    Card
- from "./Card.js";
-
-//массив с настройками для enableValidation
-export const obj = {
-    formSelector: ".popup__placeholder",
-    inputSelector: ".popup__placeholder-input",
-    submitButtonSelector: ".popup__save-button",
-    inactiveButtonClass: 'form__submit_inactive',
-    inputErrorClass: "form__input_type_error",
-    errorClass: "form__input-error_active",
-    errorText: ".popup__error"
-};
-
-
 export class FormValidator {
     constructor(formElement, obj) {
         this._formselector = obj.formSelector;
@@ -31,7 +15,7 @@ export class FormValidator {
         this._formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
         })
-        this._seteventListener();
+        this._setEventListener();
     }
 
     _isValid = (inputElement) => {
@@ -49,7 +33,7 @@ export class FormValidator {
         });
     }
 
-    toggleButtonState = () => {
+    _toggleButtonState = () => {
         if (this._hasInvalidInput()) {
             this._submitButtonElement.classList.add(this._inactiveButtonClass);
             this._submitButtonElement.setAttribute('disabled', 'disabled');
@@ -59,12 +43,12 @@ export class FormValidator {
         }
     }
 
-    _seteventListener = () => {
+    _setEventListener = () => {
         this._hasInvalidInput();
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._isValid(inputElement);
-                this.toggleButtonState();
+                this._toggleButtonState();
             })
         })
     }
@@ -83,10 +67,10 @@ export class FormValidator {
         errorElement.classList.remove(this._errorClass);
     }
 
-    letscleanErrors = () => {
-        const inputList = Array.from(document.querySelectorAll(this._errorText));
-        inputList.forEach((inputElement) => {
-            inputElement.textContent = '';
+    letsCleanErrors = () => {
+        this._inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement);
         })
+        this._toggleButtonState();
     }
 }

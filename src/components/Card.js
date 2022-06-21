@@ -1,4 +1,3 @@
-import Popup from "./Popup.js";
 export default class Card {
 constructor(data, cardSelector, {
   handleCardClick,
@@ -7,7 +6,7 @@ constructor(data, cardSelector, {
  }) {
   this._link = data.link;
   this._name = data.name;
-  this._cardSelector = cardSelector;
+  this._cardSelector = cardSelector
   this._handleCardClick = handleCardClick;
   this._handleLikeClick = handleLikeClick;
   this._handleDeleteCardClick = handleDeleteCardClick;
@@ -16,7 +15,7 @@ constructor(data, cardSelector, {
 
  //клонирует карточку
  _getTemplate() {
-  return document.querySelector('.template-cards').content.querySelector('.elements__element').cloneNode(true);
+  return document.querySelector(this._cardSelector).content.querySelector('.elements__element').cloneNode(true);
  }
 
 
@@ -25,10 +24,11 @@ constructor(data, cardSelector, {
   this._element = this._getTemplate();
   this._elementButton = this._element.querySelector('.elements__delete-button');
   this._element.querySelector('.elements__element-subtitle').textContent = this._name; /*тянет в клон текст*/
-  const elementImg = this._element.querySelector('.elements__element-image');
+  this._image = this._element.querySelector('.elements__element-image');
+  this._likeButtton = this._element.querySelector('.elements__element-like');
 
-  elementImg.src = this._link; /*тянет в клон ссылку*/
-  elementImg.alt = this._name;
+  this._image.src = this._link; /*тянет в клон ссылку*/
+  this._image.alt = this._name;
 
   this._setCardEventListeners(this._element);
 
@@ -36,10 +36,10 @@ constructor(data, cardSelector, {
  }
 
  //слушатели лайка удаления и приближения карточек
- _setCardEventListeners(element) {
-  element.querySelector('.elements__delete-button').addEventListener('click', this._handleDelete.bind(this));
-  element.querySelector('.elements__element-like').addEventListener('click', this._handleLike.bind(this));
-  element.querySelector('.elements__element-image').addEventListener('click', () => {
+ _setCardEventListeners() {
+  this._elementButton.addEventListener('click', this._handleDelete.bind(this));
+  this._element.querySelector('.elements__element-like').addEventListener('click', this._handleLike.bind(this));
+  this._image.addEventListener('click', () => {
    this._handleCardClick(this._name, this._link);
   });
  }
@@ -57,8 +57,8 @@ constructor(data, cardSelector, {
  }
 
  //поставит лайк
- _handleLike(event) {
-  event.target.classList.toggle('elements__element-like_activated') 
+ _handleLike() {
+  this._likeButtton.classList.toggle('elements__element-like_activated');
  }
 
  //вернет карточку

@@ -1,26 +1,23 @@
 //импорты
-import './pages/index.css'
+import './index.css'
 import
 Card
-from "./scripts/components/Card.js"
+from "../components/Card.js"
 import {
   FormValidator
-} from "./scripts/components/FormValidator.js"
-import {
-  obj
-} from "./scripts/components/FormValidator.js"
+} from "../components/FormValidator.js"
 import {
   initialCards
-} from "./scripts/utils/data.js"
+} from "../utils/data.js"
 import
 Section
-from "./scripts/components/Section.js"
+from "../components/Section.js"
 import PopupWithImage
-from "./scripts/components/PopupWithImage.js"
+from "../components/PopupWithImage.js"
 import
-PopupWithForm from "./scripts/components/PopupWithForm.js"
+PopupWithForm from "../components/PopupWithForm.js"
 import
-UserInfo from './scripts/components/UserInfo.js'
+UserInfo from '../components/UserInfo.js'
 import {
   buttonOpenPopup,
   nameInput,
@@ -29,8 +26,9 @@ import {
   toogleCreate,
   formElement,
   profileName,
-  profileAbout
-} from './scripts/utils/constants.js'
+  profileAbout,
+  obj
+} from '../utils/constants.js'
 
 
 //попап просмотра карточек
@@ -49,15 +47,10 @@ cardsList.initialItems();
 
 
 
-//данные профиля юзера
-const userInfo = new UserInfo({
-  profileName: profileName,
-  profileAbout: profileAbout
-});
 
 
-const place = document.querySelector('#place').value
-const link = document.querySelector('#link').value
+
+
 
 //добавление карточек в контейнер (Попап с карточками)
 const popupAdd = new PopupWithForm('#popup-cards', {
@@ -67,7 +60,7 @@ const popupAdd = new PopupWithForm('#popup-cards', {
       link: data.placeLink
     }
     const insertCard = createCard(item);
-    cardsList.addItem(insertCard); 
+    cardsList.addItem(insertCard);
   }
 })
 popupAdd.setEventListeners();
@@ -75,29 +68,33 @@ popupAdd.setEventListeners();
 buttonAdd.addEventListener('click', openAddCardForm);
 
 function openAddCardForm() {
-  validationCardPopup.toggleButtonState()
-  validationCardPopup.letscleanErrors()
+  validationCardPopup.letsCleanErrors()
   popupAdd.open();
 }
 
 
+//данные профиля юзера
+const userInfo = new UserInfo({
+  profileName,
+  profileAbout
+});
+
 
 //добавление данных профиля (Попап профиля)
-const popupEdit = new PopupWithForm('#popup-profile', ({
-  name,
-  about
-}) => {
-  userInfo.setUserInfo({
-    name: nameInput.value,
-    about: passionInput.value 
-  });
+const popupEdit = new PopupWithForm('#popup-profile', {
+  submitForm: () => {
+    userInfo.setUserInfo(
+      nameInput.value,  //заработало, но я не совсем понял это у меня сейчас "передаваемые данные" или опять "обращение напрямую", совсем не понимаю как сделать по другому :(
+      passionInput.value
+    )
+  }
 })
 popupEdit.setEventListeners();
 
 buttonOpenPopup.addEventListener('click', () => {
   nameInput.value = userInfo.getUserInfo().name; //вставка с шапки в форму
   passionInput.value = userInfo.getUserInfo().about; //вставка с шапки в форму
-  validationEditPopup.letscleanErrors(); //очистит поля сообщений ошибок, при повторном открытии попапа
+  validationEditPopup.letsCleanErrors(); //очистит поля сообщений ошибок, при повторном открытии попапа
   popupEdit.open();
 });
 
@@ -105,7 +102,7 @@ buttonOpenPopup.addEventListener('click', () => {
 
 //возвращаем карточки
 function createCard(item) {
-  const card = new Card(item, 'template-cards', {
+  const card = new Card(item, '.template-cards', {
     handleCardClick: (name, link) => {
       popupImg.open(name, link);
     },
@@ -122,4 +119,3 @@ validationEditPopup.enableValidation()
 
 const validationCardPopup = new FormValidator(toogleCreate, obj) // для попапа с карточками
 validationCardPopup.enableValidation()
-
