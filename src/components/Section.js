@@ -6,9 +6,9 @@ export default class Section {
     }
    
     //отрисовка всех элементов
-    initialItems() {
-     this._renderedItems.forEach(item => this._renderer(item)); //если увидите, можно небольшой пример как реализовать ваш совет про вынесение массива сюда из конструктора
-    }                                                           //пытался и так и эдак, всё время не получалось, спасибо!
+    initialItems(items) {
+     items.forEach(item => this._renderer(item));
+    }                                                           
    
    
     //добавит в контейнер

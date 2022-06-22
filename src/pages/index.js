@@ -37,13 +37,12 @@ popupImg.setEventListeners();
 
 //отрисовка карточек
 const cardsList = new Section({
-  items: initialCards,
   renderer: (item) => {
     const insertCard = createCard(item);
     cardsList.addItem(insertCard);
   }
 }, '.elements');
-cardsList.initialItems();
+cardsList.initialItems(initialCards);
 
 
 
@@ -82,10 +81,10 @@ const userInfo = new UserInfo({
 
 //добавление данных профиля (Попап профиля)
 const popupEdit = new PopupWithForm('#popup-profile', {
-  submitForm: () => {
+  submitForm: (data) => {
     userInfo.setUserInfo(
-      nameInput.value,  //заработало, но я не совсем понял это у меня сейчас "передаваемые данные" или опять "обращение напрямую", совсем не понимаю как сделать по другому :(
-      passionInput.value
+      data.name,
+      data.passion
     )
   }
 })
