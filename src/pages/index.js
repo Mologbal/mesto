@@ -16,8 +16,6 @@ import PopupWithImage
 from "../components/PopupWithImage.js"
 import
 PopupWithForm from "../components/PopupWithForm.js"
-import
-UserInfo from '../components/UserInfo.js'
 import {
   buttonOpenPopup,
   nameInput,
@@ -27,9 +25,72 @@ import {
   formElement,
   profileName,
   profileAbout,
-  obj
+  obj,
+  avatar,
+  formAvatar,
+  avatarButton,
+  deleteButton,
 } from '../utils/constants.js'
+import
+Api from '../components/Api.js'
+import
+UserInfo from '../components/UserInfo.js'
+import
+PopupDelete from '../components/PopupDelete.js'
 
+// API
+
+//шаблонные настройки new Api
+const apiConfig = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
+  headers: {
+    authorization: '1795560e-42d9-4d62-83c9-e05719bf38b6',
+    'Content-Type': 'application/json'
+  }
+}
+const api = new Api(apiConfig)
+let userId //явно не ООП но не знаю как от этого костыля избавится
+
+//объединенный промис и для профиля и для карточек
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([data, items]) => {
+    userInfo.setUserInfo(data);
+    userId = data._id
+    cardsList.initialItems(items);
+  })
+  .catch((err) => console.log(err))
+
+//удаление карточки (попап удаления карточки)
+const deleteCardPopup = new PopupDelete({
+  popupSelector: '#popup-delete'
+})
+deleteCardPopup.setEventListeners()
+
+//аватар пользователя
+//добавление аватара (попап аватара)
+const editAvatarPop = new PopupWithForm('#popup-avatar', {
+  submitForm: (data) => {
+    editAvatarPop.loading(true)
+    api.editAvatar(data)
+      .then((data) => {
+        avatar.src = data.avatar
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      })
+      .finally(() => {
+        editAvatarPop.loading(false)
+      })
+  }
+})
+editAvatarPop.setEventListeners();
+
+avatarButton.addEventListener('click', openAvatarForm)
+
+function openAvatarForm() {
+  validationCardPopup.letsCleanErrors()
+  editAvatarPop.open()
+}
 
 //попап просмотра карточек
 const popupImg = new PopupWithImage('#popup-approximation');
@@ -42,24 +103,21 @@ const cardsList = new Section({
     cardsList.addItem(insertCard);
   }
 }, '.elements');
-cardsList.initialItems(initialCards);
-
-
-
-
-
-
-
 
 //добавление карточек в контейнер (Попап с карточками)
 const popupAdd = new PopupWithForm('#popup-cards', {
   submitForm: (data) => {
-    const item = {
-      name: data.placeName,
-      link: data.placeLink
-    }
-    const insertCard = createCard(item);
-    cardsList.addItem(insertCard);
+    popupAdd.loading(true)
+    api.addCard(data)
+      .then((data) => {
+        cardsList.addItem(createCard(data));
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      })
+      .finally(() => {
+        popupAdd.loading(false)
+      })
   }
 })
 popupAdd.setEventListeners();
@@ -71,50 +129,93 @@ function openAddCardForm() {
   popupAdd.open();
 }
 
-
 //данные профиля юзера
 const userInfo = new UserInfo({
   profileName,
-  profileAbout
+  profileAbout,
+  avatar
 });
-
 
 //добавление данных профиля (Попап профиля)
 const popupEdit = new PopupWithForm('#popup-profile', {
   submitForm: (data) => {
-    userInfo.setUserInfo(
-      data.name,
-      data.passion
-    )
+    popupEdit.loading(true)
+    api.editUserInfo(data)
+      .then((data) => {
+        userInfo.setUserInfo(data)
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      })
+      .finally(() => {
+        popupEdit.loading(false)
+      })
   }
 })
 popupEdit.setEventListeners();
 
 buttonOpenPopup.addEventListener('click', () => {
-  nameInput.value = userInfo.getUserInfo().name; //вставка с шапки в форму
-  passionInput.value = userInfo.getUserInfo().about; //вставка с шапки в форму
+  nameInput.value = userInfo.getUserInfo().name;
+  passionInput.value = userInfo.getUserInfo().about;
   validationEditPopup.letsCleanErrors(); //очистит поля сообщений ошибок, при повторном открытии попапа
   popupEdit.open();
 });
 
-
-
 //возвращаем карточки
-function createCard(item) {
-  const card = new Card(item, '.template-cards', {
+const createCard = (data) => {
+  const card = new Card({
+    data: data,
+    cardSelector: '.template-cards',
+    userId: userId,
     handleCardClick: (name, link) => {
       popupImg.open(name, link);
     },
-  });
-  return card.generate();
+    handleDeleteIconClick: (cardId) => {
+      deleteCardPopup.open();
+      deleteCardPopup.deleteCallback(() => {
+        deleteCardPopup.loading(true)
+        api.deleteCard(cardId)
+          .then(() => {
+            deleteCardPopup.close();
+            card.deleteCard();
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          })
+          .finally(() => {
+            deleteCardPopup.loading(false)
+          })
+      });
+    },
+    setLike: (cardId) => {
+      api.setLike(cardId)
+        .then((data) => {
+          card.checkLikeLength(data)
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
+    },
+    removeLike: (cardId) => {
+      api.deleteLike(cardId)
+        .then((data) => {
+          card.checkLikeLength(data)
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
+    }
+  })
+  const cardElement = card.renderCard();
+  return cardElement;
 }
-
-
 
 //!!Секция слушателей работающих с модулем 'FormValidator'!!
 const validationEditPopup = new FormValidator(formElement, obj) //для попапа с профилем
 validationEditPopup.enableValidation()
 
-
 const validationCardPopup = new FormValidator(toogleCreate, obj) // для попапа с карточками
 validationCardPopup.enableValidation()
+
+const validationAvatarPopup = new FormValidator(formAvatar, obj) // для попапа с аватаром
+validationAvatarPopup.enableValidation()

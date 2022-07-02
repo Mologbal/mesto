@@ -38,3 +38,7 @@
 @import url(../blocks/popup/popup_approximation.css);
 @import url(../blocks/popup/__overlay/popup__overlay.css);
 @import url(../blocks/popup/__close-button/_ap/popup__close-button_ap.css);
+@import url(../blocks/profile/__editAva-button/profile__editAva-button.css);
+@import url(../blocks/profile/__edit-box/profile__edit-box.css);
+@import url(../blocks/elements/__element-like-length/elements__element-like-length.css);
+@import url(../blocks/elements/__element-likes-box/elements__element-likes-box.css);
