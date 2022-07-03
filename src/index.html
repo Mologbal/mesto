@@ -93,14 +93,14 @@
     <!-- Попап для установки аватара пользователя   -->
     <div class="popup" id="popup-avatar">
         <div class="popup__window">
-            <button class="popup__close-button" id="popup-avatar-close-button" type="button"
+            <button class="popup__close-button" id="popup-cards-close-button" type="button"
                 aria-label="Закрыть"></button>
             <h2 class="popup__title">Обновить аватар</h2>
             <form class="popup__placeholder" id="popup-avatar-form" name="popup__form" novalidate>
                 <div class="popup__input-container">
                     <input class="popup__placeholder-input popup__placeholder-input_type_passion" id="avatar" type="url"
                         placeholder="Ссылка на картинку" value="" name="avatar" required>
-                    <span id="error-link-avatar" class="popup__error"></span>
+                    <span id="error-avatar" class="popup__error"></span>
                 </div>
                 <button class="popup__save-button" id="popupAvatar-save-button" type="submit"
                     aria-label="Сохранить">Создать</button>
@@ -112,11 +112,11 @@
     <!-- Попап для подтверждения удаления карточки   -->
     <div class="popup" id="popup-delete">
         <div class="popup__window">
-            <button class="popup__close-button" id="popup-delete-close-button" type="button"
+            <button class="popup__close-button" id="popup-cards-close-button" type="button"
                 aria-label="Закрыть"></button>
             <h2 class="popup__title">Вы уверены?</h2>
             <form class="popup__placeholder" id="popup-delete-form" name="popup__delete" novalidate>
-                <button class="popup__save-button" id="popupDelete-save-button" type="submit" value="Да"
+                <button class="popup__save-button" id="popupAvatar-save-button" type="submit" value="Да"
                     aria-label="Сохранить">Да</button>
             </form>
         </div>
@@ -144,9 +144,9 @@
             <div class="elements__element-box">
                 <h2 class="elements__element-subtitle"></h2>
                 <div class="elements__element-likes-box">
-                    <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
-                    <span class="elements__element-like-length">100</span>
-                </div>
+                <button class="elements__element-like" type="button" aria-label="Понравилось"></button>
+                <span class="elements__element-like-length"></span>
+            </div>
             </div>
         </li>
     </template>

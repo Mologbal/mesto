@@ -2,7 +2,7 @@ export default class UserInfo {
     constructor({
         profileName,
         profileAbout,
-        avatar
+        avatar,
     }) {
         this._name = profileName;
         this._about = profileAbout;
@@ -20,9 +20,10 @@ export default class UserInfo {
     }
 
     //принимет и добавит на страницу
-    setUserInfo(data) {
-        this._name.textContent = data.name;
-        this._about.textContent = data.about;
-        this._avatar.src = data.avatar
+    setUserInfo({ name, about, avatar, _id }) {
+        this._name.textContent = name;
+        this._about.textContent = about;
+        this._avatar.src = avatar;
+        this._id = _id;
     }
 }

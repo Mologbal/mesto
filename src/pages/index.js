@@ -29,7 +29,7 @@ import {
   avatar,
   formAvatar,
   avatarButton,
-  deleteButton,
+  apiConfig
 } from '../utils/constants.js'
 import
 Api from '../components/Api.js'
@@ -39,23 +39,18 @@ import
 PopupDelete from '../components/PopupDelete.js'
 
 // API
-
-//шаблонные настройки new Api
-const apiConfig = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
-  headers: {
-    authorization: '1795560e-42d9-4d62-83c9-e05719bf38b6',
-    'Content-Type': 'application/json'
-  }
-}
 const api = new Api(apiConfig)
-let userId //явно не ООП но не знаю как от этого костыля избавится
+
 
 //объединенный промис и для профиля и для карточек
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([data, items]) => {
-    userInfo.setUserInfo(data);
-    userId = data._id
+    userInfo.setUserInfo({
+      name: data.name,
+      about: data.about,
+      avatar: data.avatar,
+      _id: data._id
+    });
     cardsList.initialItems(items);
   })
   .catch((err) => console.log(err))
@@ -73,7 +68,8 @@ const editAvatarPop = new PopupWithForm('#popup-avatar', {
     editAvatarPop.loading(true)
     api.editAvatar(data)
       .then((data) => {
-        avatar.src = data.avatar
+        userInfo.setUserInfo(data)
+        editAvatarPop.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
@@ -88,7 +84,7 @@ editAvatarPop.setEventListeners();
 avatarButton.addEventListener('click', openAvatarForm)
 
 function openAvatarForm() {
-  validationCardPopup.letsCleanErrors()
+  validationAvatarPopup.letsCleanErrors()
   editAvatarPop.open()
 }
 
@@ -111,6 +107,7 @@ const popupAdd = new PopupWithForm('#popup-cards', {
     api.addCard(data)
       .then((data) => {
         cardsList.addItem(createCard(data));
+        popupAdd.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
@@ -142,7 +139,8 @@ const popupEdit = new PopupWithForm('#popup-profile', {
     popupEdit.loading(true)
     api.editUserInfo(data)
       .then((data) => {
-        userInfo.setUserInfo(data)
+        userInfo.setUserInfo(data);
+        popupEdit.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
@@ -166,7 +164,7 @@ const createCard = (data) => {
   const card = new Card({
     data: data,
     cardSelector: '.template-cards',
-    userId: userId,
+    userId: userInfo._id,
     handleCardClick: (name, link) => {
       popupImg.open(name, link);
     },

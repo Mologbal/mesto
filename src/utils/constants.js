@@ -21,3 +21,12 @@ export const obj = {
     errorClass: "form__input-error_active",
     errorText: ".popup__error"
 };
+
+//шаблонные настройки new Api
+export const apiConfig = {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
+    headers: {
+      authorization: '1795560e-42d9-4d62-83c9-e05719bf38b6',
+      'Content-Type': 'application/json'
+    }
+  }
